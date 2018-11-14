@@ -1,0 +1,40 @@
+sampleMean=matrix(0, 4, 50)
+sampleMedian=matrix(0, 4, 50)
+sampleStdev=matrix(0,4,50)
+tempxx<-1
+for (xx in c(5, 10, 20, 40)){
+
+for (yy in 1:50){
+numReads<-42949 # total number of original reads in the matrix
+sampMax<-42949# maximum read id to be sampled
+sampNum<-xx# number of read ids to be sampled
+
+
+distances<-matrix(0,sampNum,sampNum)
+distances2<-data.frame()
+coordinates<-matrix(0,sampNum,sampNum)
+
+samp<-sort(sample(sampMax,sampNum))
+xCoor<-1
+yCoor<-1
+for (x in samp){
+for (y in samp){
+coordinates[xCoor,yCoor]<-((x-1)*42949+y)
+distances[xCoor,yCoor]<-check[[1]][(x-1)*42949+y]
+distances2[xCoor,yCoor]<-check[[1]][(x-1)*42949+y]
+yCoor<-yCoor+1
+}
+xCoor<-xCoor+1
+yCoor<-1
+}
+distances2[upper.tri(distances2, diag=TRUE)]=NA
+
+sampleMean[tempxx,yy]<-mean(distances2[lower.tri(distances2, diag=FALSE)])
+sampleMedian[tempxx,yy]<-median(distances2[lower.tri(distances2, diag=FALSE)])
+sampleStdev[tempxx,yy]<-sd(distances2[lower.tri(distances2, diag=FALSE)])
+
+
+}
+ 
+tempxx<-tempxx+1
+}
