@@ -28,6 +28,6 @@ staphSample <- function(inputMatrix, samplesizes, replicates){
         }
         tempxx<-tempxx+1
     }
-    sampleList("sampleMeans"=sampleMean, "sampleMedians"=sampleMedian, "sampleStdev"=sampleStdev)
+    sampleList<-list("sampleMeans"=sampleMean, "sampleMedians"=sampleMedian, "sampleStdev"=sampleStdev)
     return(sampleList)
 }
