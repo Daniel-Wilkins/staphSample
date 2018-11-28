@@ -17,18 +17,9 @@ staphSample <- function(inputMatrix, samplesizes, replicates){
             coordinates<-matrix(0,sampNum,sampNum)
 
             samp<-sort(sample(sampMax,sampNum))
-            xCoor<-1
-            yCoor<-1
-            for (x in samp){
-                for (y in samp){
-                    coordinates[xCoor,yCoor]<-((x-1)*numReads+y)
-                    distances[xCoor,yCoor]<-inputMatrix[[1]][(x-1)*numReads+y]
-                    distances2[xCoor,yCoor]<-inputMatrix[[1]][(x-1)*numReads+y]
-                    yCoor<-yCoor+1
-               }
-               xCoor<-xCoor+1
-               yCoor<-1
-            }
+            
+            distances2<-inputMatrix[samp, samp]
+            
             distances2[upper.tri(distances2, diag=TRUE)]=NA
 
             sampleMean[tempxx,yy]<-mean(distances2[lower.tri(distances2, diag=FALSE)])
