@@ -37,4 +37,7 @@ staphSample <- function(inputMatrix, samplesizes, replicates){
         }
         tempxx<-tempxx+1
     }
+    return(sampleMean)
+    return(sampleMedian)
+    return(sampleStdev)
 }
