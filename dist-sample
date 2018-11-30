@@ -1,8 +1,8 @@
 staphSample <- function(inputMatrix, samplesizes, replicates){
 
-    sampleMean=matrix(0, length(samplesizes), replicates)
-    sampleMedian=matrix(0, length(samplesizes), replicates)
-    sampleStdev=matrix(0, length(samplesizes),replicates)
+    sampleMean=array(NaN, c(length(samplesizes), replicates, max(samplesizes)))
+    sampleMedian=array(NaN, c(length(samplesizes), replicates, max(samplesizes)))
+    sampleStdev=array(NaN, c(length(samplesizes),replicates, max(samplesizes)))
     tempxx<-1
     for (xx in samplesizes){
 
