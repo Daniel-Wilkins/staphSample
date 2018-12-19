@@ -1,0 +1,37 @@
+staphSample <- function(inputMatrix, samplesizes, replicates){
+
+    sampleMean=array(NaN, c(length(samplesizes), replicates, max(samplesizes)))
+    sampleMedian=array(NaN, c(length(samplesizes), replicates, max(samplesizes)))
+    sampleStdev=array(NaN, c(length(samplesizes),replicates, max(samplesizes)))
+    tempxx<-1
+    for (xx in samplesizes){
+
+        for (yy in 1:replicates){
+            numReads<-dim(inputMatrix)[1] # total number of original reads in the matrix
+            sampMax<-dim(inputMatrix)[1]# maximum read id to be sampled
+            sampNum<-xx# number of read ids to be sampled
+
+
+            distances<-matrix(0,sampNum,sampNum)
+            distances2<-data.frame()
+            coordinates<-matrix(0,sampNum,sampNum)
+
+            samp<-sort(sample(sampMax,sampNum))
+            
+            distances2<-inputMatrix[samp, samp]
+            
+            #distances2[upper.tri(distances2, diag=TRUE)]=NA
+            for (zz in 1:xx){
+            sampleMean[tempxx, yy, zz]<-mean(distances2[zz,], na.rm=TRUE)
+            sampleMedian[tempxx, yy, zz]<-median(distances2[zz,], na.rm=TRUE)
+            sampleStdev[tempxx, yy, zz]<-sd(distances2[zz,], na.rm=TRUE)
+            }
+            #sampleMean[tempxx,yy]<-mean(distances2[lower.tri(distances2, diag=FALSE)])
+            #sampleMedian[tempxx,yy]<-median(distances2[lower.tri(distances2, diag=FALSE)])
+            #sampleStdev[tempxx,yy]<-sd(distances2[lower.tri(distances2, diag=FALSE)])
+        }
+        tempxx<-tempxx+1
+    }
+    sampleList<-list("sampleMeans"=sampleMean, "sampleMedians"=sampleMedian, "sampleStdev"=sampleStdev)
+    return(sampleList)
+}
